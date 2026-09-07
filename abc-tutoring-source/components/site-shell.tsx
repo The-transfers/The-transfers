@@ -1,0 +1,3 @@
+import Link from 'next/link';import {ArrowUpRight} from 'lucide-react';
+export function Header(){return <header className="header"><Link href="/" className="brand"><span className="brandmark">abc<span>✳</span></span><span>Tutoring</span></Link><nav><Link href="/">Home</Link><Link href="/tutors">Our tutors</Link><Link href="/tutors" className="button small">Find a tutor <ArrowUpRight size={17}/></Link></nav></header>}
+export function Footer(){return <footer className="wrap"><span>abc Tutoring</span><p>Prototype · Sample tutors and sessions · No payment collected</p><Link href="/tutors">Find a tutor ↗</Link></footer>}

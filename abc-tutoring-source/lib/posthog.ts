@@ -1,0 +1,4 @@
+export const POSTHOG_HOST='https://us.i.posthog.com';
+export const POSTHOG_TOKEN='phc_n96knBxRX6cWXchFdStoqKnNR56o9QPaCAv9Py7PvEE5';
+export const eventNames=['page_viewed','subject_filtered','tutor_profile_viewed','booking_started','booking_slot_selected','booking_details_started','booking_abandoned','booking_failed','booking_completed'];
+export async function capture(event:string,distinctId:string,properties:Record<string,unknown>={}){const response=await fetch(POSTHOG_HOST+'/i/v0/e/',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({api_key:POSTHOG_TOKEN,event,properties:{distinct_id:distinctId,$process_person_profile:false,app:'abc_tutoring',environment:'prototype',$geoip_disable:true,...properties},timestamp:new Date().toISOString()}),signal:AbortSignal.timeout(5000)});if(!response.ok)throw new Error('Analytics unavailable');return response.status;}
