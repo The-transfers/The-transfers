@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ABC Tutoring</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f7fbff;
+      color: #1f2937;
+    }
+
+    header {
+      padding: 20px 40px;
+      background: white;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .hero {
+      padding: 60px 40px;
+      text-align: center;
+    }
+
+    button {
+      padding: 12px 18px;
+      border: none;
+      border-radius: 8px;
+      background: #2563eb;
+      color: white;
+      cursor: pointer;
+      margin: 5px;
+    }
+
+    .section {
+      max-width: 1000px;
+      margin: auto;
+      padding: 30px;
+    }
+
+    .filters {
+      margin-bottom: 20px;
+    }
+
+    .tutors {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 6px 0 14px;
+      box-sizing: border-box;
+    }
+
+    #booking {
+      margin-top: 40px;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+    }
+
+    .success {
+      padding: 15px;
+      background: #ecfdf5;
+      border: 1px solid #10b981;
+      margin-top: 20px;
+    }
+  </style>
+
+  <script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}p||((p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",p.onerror=function(){p=null},(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r));var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],Object.defineProperty(u,"toString",{configurable:!0,enumerable:!0,writable:!0,value:function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e}}),Object.defineProperty(u.people,"toString",{configurable:!0,enumerable:!0,writable:!0,value:function(){return u.toString(1)+".people (stub)"}}),o="El Rl Pl Al Ll init iu ru Xl tu au fa eu uu Jl cu fu pu capture getExtension nu Ml yu calculateEventProperties mu register register_once register_for_session unregister unregister_for_session ku Yl bu getFeatureFlag getFeatureFlagPayload getFeatureFlagResult getAllFeatureFlags isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync Su identify setPersonProperties unsetPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset xu shutdown setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty vu createPersonProfile setInternalOrTestUser wu Dl $l opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing hu debug pa ns getPageViewId captureTraceFeedback captureTraceMetric Vl".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('phc_n96knBxRX6cWXchFdStoqKnNR56o9QPaCAv9Py7PvEE5', {
+        api_host: 'https://us.i.posthog.com',
+        defaults: '2026-05-30',
+        person_profiles: 'identified_only', // or 'always' to create profiles for anonymous users as well
+    })
+</script>
+</head>
+<body>
+
+<header>
+  <h2>ABC Tutoring</h2>
+</header>
+
+<section class="hero">
+  <h1>Friendly K–12 tutoring for every learner</h1>
+  <p>Find a tutor for math, science, or reading and book a session online.</p>
+  <button onclick="document.getElementById('directory').scrollIntoView()">Find a Tutor</button>
+</section>
+
+<section class="section" id="directory">
+  <h2>Find a Tutor</h2>
+
+  <div class="filters">
+    <button onclick="filterTutors('All')">All</button>
+    <button onclick="filterTutors('Math')">Math</button>
+    <button onclick="filterTutors('Science')">Science</button>
+    <button onclick="filterTutors('Reading')">Reading</button>
+  </div>
+
+  <div class="tutors" id="tutorList"></div>
+
+  <div id="booking" class="hidden">
+    <h2>Book a Session</h2>
+    <p id="selectedTutorText"></p>
+
+    <label>Parent name</label>
+    <input id="parentName">
+
+    <label>Parent email</label>
+    <input id="parentEmail" type="email">
+
+    <label>Student first name</label>
+    <input id="studentName">
+
+    <label>Student grade</label>
+    <select id="grade">
+      <option value="">Select grade</option>
+      <option>6</option>
+      <option>7</option>
+      <option>8</option>
+    </select>
+
+    <label>Requested subject</label>
+    <select id="subject">
+      <option>Math</option>
+      <option>Science</option>
+      <option>Reading</option>
+    </select>
+
+    <label>Time</label>
+    <select id="time"></select>
+
+    <button onclick="submitBooking()">Confirm Booking</button>
+
+    <div id="confirmation"></div>
+  </div>
+</section>
+
+<script>
+const tutors = [
+  {
+    name: "Maya Chen",
+    subject: "Math",
+    grades: "6–12",
+    rate: 45,
+    times: ["Monday 4:00 PM", "Tuesday 5:00 PM"]
+  },
+  {
+    name: "Daniel Kim",
+    subject: "Science",
+    grades: "6–12",
+    rate: 50,
+    times: ["Monday 5:00 PM", "Wednesday 4:00 PM"]
+  },
+  {
+    name: "Sofia Martinez",
+    subject: "Reading",
+    grades: "K–8",
+    rate: 40,
+    times: ["Tuesday 4:00 PM", "Thursday 5:00 PM"]
+  }
+];
+
+let selectedTutor = null;
+
+function sendEvent(name, properties = {}) {
+  if (window.posthog && window.posthog.capture) {
+    posthog.capture(name, properties);
+  }
+  console.log("PostHog event:", name, properties);
+}
+
+function renderTutors(filter = "All") {
+  const list = document.getElementById("tutorList");
+  list.innerHTML = "";
+
+  tutors
+    .filter(t => filter === "All" || t.subject === filter)
+    .forEach(t => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <h3>${t.name}</h3>
+        <p><strong>Subject:</strong> ${t.subject}</p>
+        <p><strong>Grades:</strong> ${t.grades}</p>
+        <p><strong>Rate:</strong> $${t.rate}/hour</p>
+        <button onclick="selectTutor('${t.name}')">Book ${t.name}</button>
+      `;
+      list.appendChild(card);
+    });
+}
+
+function filterTutors(subject) {
+  renderTutors(subject);
+  if (subject !== "All") {
+    sendEvent("subject_selected", { subject });
+  }
+}
+
+function selectTutor(name) {
+  selectedTutor = tutors.find(t => t.name === name);
+
+  sendEvent("tutor_viewed", {
+    tutor_name: selectedTutor.name,
+    subject: selectedTutor.subject
+  });
+
+  sendEvent("booking_started", {
+    tutor_name: selectedTutor.name
+  });
+
+  document.getElementById("booking").classList.remove("hidden");
+  document.getElementById("selectedTutorText").textContent =
+    `Booking with ${selectedTutor.name}`;
+
+  const timeSelect = document.getElementById("time");
+  timeSelect.innerHTML = "";
+
+  const booked = JSON.parse(localStorage.getItem("bookedTimes") || "{}");
+  const unavailable = booked[selectedTutor.name] || [];
+
+  selectedTutor.times
+    .filter(time => !unavailable.includes(time))
+    .forEach(time => {
+      const option = document.createElement("option");
+      option.value = time;
+      option.textContent = time;
+      timeSelect.appendChild(option);
+    });
+
+  document.getElementById("booking").scrollIntoView();
+}
+
+function submitBooking() {
+  const parentName = document.getElementById("parentName").value.trim();
+  const parentEmail = document.getElementById("parentEmail").value.trim();
+  const studentName = document.getElementById("studentName").value.trim();
+  const grade = document.getElementById("grade").value;
+  const subject = document.getElementById("subject").value;
+  const time = document.getElementById("time").value;
+
+  if (!parentName || !parentEmail || !studentName || !grade || !time) {
+    alert("Please complete all fields.");
+    return;
+  }
+
+  const booked = JSON.parse(localStorage.getItem("bookedTimes") || "{}");
+
+  if (!booked[selectedTutor.name]) {
+    booked[selectedTutor.name] = [];
+  }
+
+  booked[selectedTutor.name].push(time);
+  localStorage.setItem("bookedTimes", JSON.stringify(booked));
+
+  sendEvent("booking_completed", {
+    tutor_name: selectedTutor.name,
+    subject,
+    grade,
+    session_time: time
+  });
+
+  document.getElementById("confirmation").innerHTML = `
+    <div class="success">
+      Booking confirmed with ${selectedTutor.name} for ${time}.
+    </div>
+  `;
+
+  selectTutor(selectedTutor.name);
+}
+
+renderTutors();
+</script>
+
+</body>
+</html>
